@@ -20,6 +20,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 // Initialize Express app
@@ -45,9 +46,11 @@ mongoose
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(cors());
-app.use(express.static("public")); // Serve static files from the "public" folder
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// Serve static files from the client build folder
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 // Define API routes
 const authRouter = require("./routes/auth");
@@ -66,9 +69,9 @@ app.use("/api", brainTreeRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/customize", customizeRouter);
 
-// Add a root route
-app.get("/", (req, res) => {
-  res.send("Welcome to the API!");
+// Serve the React client for any other route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // Start the server
@@ -76,3 +79,4 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log("Server is running on", PORT);
 });
+
