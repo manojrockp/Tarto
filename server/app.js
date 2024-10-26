@@ -61,9 +61,4 @@ app.get("*", (req, res) => {
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log("Server is running on", PORT);
-<<<<<<< HEAD
 });
-
-=======
-});
->>>>>>> 24caa1f (Add build folder and update server for deployment)
