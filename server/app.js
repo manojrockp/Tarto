@@ -15,7 +15,6 @@ role: 0 or by default it for customer signup.
 go user model and see the role field.
 
 */
-
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -26,20 +25,11 @@ require("dotenv").config();
 // Initialize Express app
 const app = express();
 
-// Import routers
-const authRouter = require("./routes/auth");
-const categoryRouter = require("./routes/categories");
-const productRouter = require("./routes/products");
-const brainTreeRouter = require("./routes/braintree");
-const orderRouter = require("./routes/orders");
-const usersRouter = require("./routes/users");
-const customizeRouter = require("./routes/customize");
-
 // Import folder creation script
-const CreateAllFolder = require("./config/uploadFolderCreateScript");
+const createAllFolder = require("./config/uploadFolderCreateScript");
 
 // Create necessary folders if they don't exist
-CreateAllFolder();
+createAllFolder();
 
 // Database connection
 mongoose
@@ -60,6 +50,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Define API routes
+const authRouter = require("./routes/auth");
+const categoryRouter = require("./routes/categories");
+const productRouter = require("./routes/products");
+const brainTreeRouter = require("./routes/braintree");
+const orderRouter = require("./routes/orders");
+const usersRouter = require("./routes/users");
+const customizeRouter = require("./routes/customize");
+
 app.use("/api", authRouter);
 app.use("/api/user", usersRouter);
 app.use("/api/category", categoryRouter);
@@ -70,7 +68,7 @@ app.use("/api/customize", customizeRouter);
 
 // Add a root route
 app.get("/", (req, res) => {
-  res.send("Welcome to the API!"); // or res.json({ message: "Welcome to the API!" });
+  res.send("Welcome to the API!");
 });
 
 // Start the server
