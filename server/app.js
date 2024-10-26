@@ -15,7 +15,6 @@ role: 0 or by default it for customer signup.
 go user model and see the role field.
 
 */
-
 const express = require("express");
 const app = express();
 require("dotenv").config();
@@ -69,6 +68,11 @@ app.use("/api/product", productRouter);
 app.use("/api", brainTreeRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/customize", customizeRouter);
+
+// Add a root route
+app.get("/", (req, res) => {
+  res.send("Welcome to the API!"); // or res.json({ message: "Welcome to the API!" });
+});
 
 // Run Server
 const PORT = process.env.PORT || 8000;
